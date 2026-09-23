@@ -1,10 +1,10 @@
-[README.md](https://github.com/user-attachments/files/32545000/README.md)# DXF to Blender Warehouse Layout
+# DXF to Blender Warehouse Layout
 
 Turn warehouse and production-line DXF drawings into editable Blender scenes with an AI agent, a reusable layout skill, a companion Blender extension, and your own equipment assets.
 
 The workflow combines AI-assisted drawing interpretation with user review and scripted scene generation. Repeated equipment is organized into editable Geometry Nodes arrays, with a DXF underlay for visual comparison.
 
-![Example of the numbered equipment preview used for layout review](示例/编号预览_示例.png)
+![Example of the numbered equipment preview used for layout review](examples/numbered-layout-preview.png)
 
 *Example review output: grouped equipment footprints and numbered items for confirmation before modeling.*
 
@@ -119,7 +119,7 @@ guides and use its bundled scripts as needed.
 
 DXF: /path/to/warehouse.dxf
 Asset library: /path/to/equipment-library.blend
-Output directory: /path/to/project/输出/
+Output directory: /path/to/project/output/
 Target: first-floor equipment, including the full height of racks that span floors.
 
 Start with drawing analysis. Produce the equipment CSV, numbered preview,
@@ -143,17 +143,17 @@ Add confirmed dimensions or a reference image path to the prompt when available.
 4. **Compare and validate.** Check the scene against the DXF underlay, inspect counts and geometry, and review the validation report.
 5. **Refine and deliver.** Adjust exposed node parameters and save the scene, configuration, equipment list, and comparison outputs.
 
-The initial analysis stage produces the following files and does not generate a `.blend` scene. These Chinese filenames are part of the current skill's output convention:
+The initial analysis stage produces the following files and does not generate a `.blend` scene. Folder names use English. The Chinese filenames below remain part of the current skill's output convention:
 
 ```text
-输出/识图确认/
+output/review/
 ├── 1F设备清单.csv          # Equipment list and user confirmation columns
 ├── 1F编号预览.png          # Numbered layout preview
 ├── 1F识图摘要.md           # Interpretation summary and questions
 ├── 1F待确认局部.png        # Optional close-ups of uncertain items
 ├── project-config.json    # Project settings
 ├── placements.json        # Placement data
-└── _过程/                 # Intermediate analysis files
+└── _intermediate/                 # Intermediate analysis files
 ```
 
 The default scope is first-floor equipment, while preserving the full confirmed height of racks that span floors. Specify a different scope in your prompt when needed. Building floors and rack storage levels are tracked separately.
@@ -190,9 +190,9 @@ Additional operators include `wh.to_xyz`, `wh.to_points`, `wh.align_heights`, an
 | [`dxf-blender-layout/scripts/`](dxf-blender-layout/scripts/) | DXF inspection, preview rendering, layout math, and Geometry Nodes helpers |
 | [`dxf-blender-layout/assets/project-config.json`](dxf-blender-layout/assets/project-config.json) | Starting template for project settings |
 | [`warehouse_layout-0.3.0.zip`](warehouse_layout-0.3.0.zip) | Installable extension, including Python source and bundled dependencies |
-| [Workflow guide](新图纸建模_SOP.md) | Detailed operating procedure in Chinese |
-| [Product specification](仓储布局工具_PRD.md) | Extension requirements and design notes in Chinese |
-| [Example preview](示例/编号预览_示例.png) | Sample output from the confirmation stage |
+| [Workflow guide](SOP.md) | Detailed operating procedure in Chinese |
+| [Product specification](PRD.md) | Extension requirements and design notes in Chinese |
+| [Example preview](examples/numbered-layout-preview.png) | Sample output from the confirmation stage |
 
 ## Current limitations
 
