@@ -1,0 +1,48 @@
+{
+  "dxf": null,
+  "dxf_units": null,
+  "asset_library": null,
+  "blender_version": null,
+  "output_dir": null,
+  "target_building_floor": "1F",
+  "building_floor_count": null,
+  "floor_plan_regions_dxf": {},
+  "origin_dxf": null,
+  "blender_units": "m",
+  "position_tolerance_m": 0.05,
+  "asrs": {
+    "aisles": null,
+    "rack_rows": null,
+    "bay_pitch_m": null,
+    "row_depth_m": null,
+    "storage_levels": null,
+    "level_height_m": null,
+    "total_height_m": null,
+    "through_all_floors": null,
+    "stacker_asset": null,
+    "stackers_per_aisle": null
+  },
+  "beam_rack": {
+    "bays": null,
+    "beam_span_mm": null,
+    "depth_mm": null,
+    "storage_levels": null,
+    "level_height_m": null,
+    "total_height_m": null
+  },
+  "conveyor_top_height_m": null,
+  "pallet_asset": null,
+  "asset_substitutes": {},
+  "excluded": [],
+  "skipped": [],
+  "assumptions": [],
+  "underlay": {
+    "name": "1F",
+    "region_dxf": null,
+    "exclude_layers": [],
+    "include_text": false,
+    "include_hatch": false,
+    "flatten_m": 0.03,
+    "z": -0.01
+  }
+}
