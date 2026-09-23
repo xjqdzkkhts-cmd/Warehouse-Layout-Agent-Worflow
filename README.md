@@ -1,4 +1,26 @@
-# DXF to Blender Warehouse Layout
+<h1 align="center">✦ Warehouse Layout Agent ✦</h1>
+
+<h3 align="center">From 2D warehouse plans to editable 3D scenes.</h3>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Blender-4.2%2B-E87D0D?style=for-the-badge&amp;logo=blender&amp;logoColor=white" alt="Blender 4.2+" />
+  <img src="https://img.shields.io/badge/Python-Scripts-3776AB?style=for-the-badge&amp;logo=python&amp;logoColor=white" alt="Python scripts" />
+  <img src="https://img.shields.io/badge/MCP-Integration-8B5CF6?style=for-the-badge" alt="MCP integration" />
+  <img src="https://img.shields.io/badge/AI_Agent-Skill-FF69B4?style=for-the-badge" alt="AI agent skill" />
+</p>
+
+<p align="center">
+  Interpret DXF layouts · Place equipment assets · Build parametric arrays
+</p>
+
+<p align="center">
+  <a href="#installation">Installation</a> ·
+  <a href="#quick-start">Quick Start</a> ·
+  <a href="#features">Features</a> ·
+  <a href="examples/numbered-layout-preview.png">Example Preview</a>
+</p>
+
+---
 
 Turn warehouse and production-line DXF drawings into editable Blender scenes with an AI agent, a reusable layout skill, a companion Blender extension, and your own equipment assets.
 
