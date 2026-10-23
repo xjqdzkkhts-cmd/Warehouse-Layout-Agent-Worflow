@@ -44,5 +44,15 @@
     "include_hatch": false,
     "flatten_m": 0.03,
     "z": -0.01
+  },
+  "rack_contents": {
+    "enabled": null,
+    "occupancy_mode": null,
+    "occupancy_ratio": null,
+    "distribution": null,
+    "cargo_asset": null,
+    "cargo_size_m": null,
+    "pallet_asset": null,
+    "confirmation_source": null
   }
 }

@@ -1,6 +1,6 @@
 ---
 name: dxf-blender-layout
-description: 根据 DXF 仓储或产线图纸，在 Blender 中使用用户资产库摆放货架、输送设备、机器人和托盘；货架、托盘阵列等重复区域用几何节点参数化生成；附仓库图纸常见区域与设备的识图经验。适用于布局重建、遗漏核对、位置方向修正和参数化货架生成。
+description: 根据 DXF 仓储或产线图纸，在 Blender 中使用用户资产库摆放货架、输送设备、机器人和托盘；货架、托盘阵列等重复区域用几何节点参数化生成；附仓库图纸常见区域与设备的识图经验。适用于布局重建、遗漏核对、位置方向修正、参数化货架生成，以及直线、拐弯和螺旋皮带机的极简连续建模。
 ---
 
 # DXF 到 Blender 设备布局
@@ -12,6 +12,8 @@ description: 根据 DXF 仓储或产线图纸，在 Blender 中使用用户资�
 确认 DXF、资产库、目标区域、关注的设备、当前场景和输出位置；沿用已确认的信息。检查可用的 Blender 接口、版本和解析依赖（`ezdxf` 缺失时在临时目录建 venv 安装）。当前场景有未保存修改时，磁盘旧文件不能代表当前状态，不要覆盖或关闭用户工作。
 
 需求模糊且影响任务范围时，集中请用户补充。用户已经提供图纸并要求联动 Blender 摆放时，直接开始首次走查，不重复询问是否开始。不确定的设备含义、区域选择和设计参数均可向用户询问，不以反复查看文件替代一次集中确认。
+
+货架货物也是需求确认项：首次识图确认时询问是否放货箱/带货托盘，以及空架、局部摆放或满货位等分布偏好；用户已明确要求时沿用，不重复询问，不把本项目的满载效果作为其他项目默认值。将选择记录在配置的 `rack_contents` 段，未指定的细节可提出展示建议并注明假设。
 
 以 `assets/project-config.json` 建立项目配置，未知字段保留 null。分别记录建筑楼层和货架储位层数。首次走查查看明显的视图和标注；仍缺失且影响当前建模的层数、层高集中询问，不从平面图编造高度。沿用用户已有确认，明确的回答不再重复核查其意图。
 
@@ -31,9 +33,10 @@ description: 根据 DXF 仓储或产线图纸，在 Blender 中使用用户资�
 2. 集中确认：读 [csv-confirmation.md](references/csv-confirmation.md)。按其中的**固定目录和文件名**输出到 `output/review/`：设备清单 CSV、编号预览 PNG（`scripts/preview_numbered.py`）、识图摘要（含问题清单）、可选的待确认局部图、`project-config.json`、`placements.json`；中间文件只放 `_intermediate/`。本轮不建 .blend。达到可供用户确认的程度就交付；未解语义问题标不确定，停止为猜测它们而反复检查。
 3. 接收校准：按稳定编号校验用户返回的CSV或对话答复，合并已确认映射和项目需求。确认优先于先前推断。此阶段等待用户返回文件或明确批准清单；先前已有的明确确认可复用，不要求重复填表。未确认项保留待办，不猜测生成。
 4. 生成：通过实际可用的 Blender MCP、插件接口或 Blender Python 执行确认结果，不假定 MCP 已连接。资产从资产库**链接**，不导入副本。
-   - **重复区域和产线一律用几何节点**：货架排、横梁货架、搁板货架、托盘阵列、成排护栏、输送线等，读 [rack-generation.md](references/rack-generation.md)，用 `scripts/gn_point_instancer.py`。
+   - **皮带输送机先走专用路径**：读 [conveyor-modeling.md](references/conveyor-modeling.md)。直线用台面加两侧护栏，弯道用连续扫掠；螺旋必须用几何节点，暴露坡度和提升高度（本用户要求）；先保证截面与接口连续，再考虑整段复用。不得用短直段实例硬拼弯曲表面。
+   - **重复资产区域用几何节点**：货架排、横梁货架、搁板货架、托盘阵列、成排护栏等，读 [rack-generation.md](references/rack-generation.md)，用 `scripts/gn_point_instancer.py`。
    - **规则重复区域用 XYZ 阵列**（`scripts/gn_xyz_array.py`）：在修改器里按 X、Y、Z 三轴分别设数量和间距，这是用户偏好，可编辑性最强。立库一排、货架连续段（背靠背时 Y=2）、托盘矩形阵列都用它；有缺口的就拆成连续段，挂在同一个父级下。
-   - **不规则的用点位 GN**（`scripts/gn_point_instancer.py`）：输送线（一条线一个对象，混合多种资产）、巷道端护栏、零散托盘。
+   - **不规则的用点位 GN**（`scripts/gn_point_instancer.py`）：离散输送设备或完整连续输送段（一条线一个控制对象，混合多种资产；不用于替代弯道/螺旋扫掠）、巷道端护栏、零散托盘。
    - **粒度按“可独立调整的单元”**，不要整个区域一个对象。
    - 只有零星的大设备（堆垛机、提升机、单台工位）用集合实例空对象。
    - 用户提供了效果图或参考俯视图时，生成前后都要对照，尤其是块含义不确定的端部和附件。
@@ -58,17 +61,17 @@ description: 根据 DXF 仓储或产线图纸，在 Blender 中使用用户资�
 
 ## 工具边界
 
-**优先用插件「仓储布局工具」**（`warehouse_layout-*.zip`，在 Blender「偏好设置 → 获取扩展 → 从磁盘安装」后启用，`bpy.ops.wh` 存在）。已启用时不要再手写节点组、转换和验证代码，直接一行调用：
+**优先用插件「仓储布局工具」**（`warehouse_layout-*.zip`，在 Blender「偏好设置 → 获取扩展 → 从磁盘安装」后启用，`bpy.ops.wh` 存在）。先检查已安装版本及所需操作器是否存在，再调用对应功能；不能只凭 `bpy.ops.wh` 命名空间判断功能齐全。仓库附带的 0.3.0 支持以下接口；精简版 0.4.x 已移除阵列转换、高度对齐与验收，缺失能力退回脚本：
 - `bpy.ops.wh.setup_nodes()`：节点组；
 - `bpy.ops.wh.to_xyz(collection=…, prefix=…, group_mode='LINE'|'CLUSTER')`：规则区域转 XYZ 阵列，自带校验和回滚；
-- `bpy.ops.wh.to_points(collection=…, prefix=…, group_mode='LINE')`：输送线；
+- `bpy.ops.wh.to_points(collection=…, prefix=…, group_mode='LINE')`：离散输送设备或已建好的完整输送段；不负责连续皮带曲面；
 - `bpy.ops.wh.align_heights(margin=1.0)`：提升机和堆垛机高度；
 - `bpy.ops.wh.validate()`：然后只读 `scene["wh_last_report"]` 的几行摘要；
 - `bpy.ops.wh.import_underlay(config_path=…)`：把平面图按图层导入为矢量底图，放在模型底下，和模型共用原点和单位；
 - `bpy.ops.wh.compare_mode()`：对照模式，顶视正交视图、模型半透明；
 - `bpy.ops.wh.build_walls(config_path=…, height=…)`：一键挤出墙体，每个空间一个墙体对象，墙高可调。墙高没有依据时要问用户，不要默认用 6m。
 
-插件没有启用时，才退回下面的脚本。
+插件未启用或缺少对应操作器时，退回下面的脚本。插件未提供的连续皮带扫掠能力按 conveyor-modeling.md 用 Blender Python 实现，不受点位转换流程限制。
 
 - `scripts/dxf_inventory.py`（需 ezdxf/matplotlib）：DXF 统计、文字、区域块插入提取（含动态块原名、求值包围盒）、区域渲染、分块散点图。不做语义判断。
 - `scripts/preview_numbered.py`（只需 matplotlib）：从设备清单 CSV 画编号预览 PNG（分组着色、分组标签、待确认红字编号、图例）。集中确认阶段固定用它出图。
@@ -76,4 +79,5 @@ description: 根据 DXF 仓储或产线图纸，在 Blender 中使用用户资�
 - `scripts/gn_point_instancer.py`（在 Blender 内执行）：建资产组 `GN资产组` 和节点组 `GN_点位实例`（单对象可混合多种资产，带竖向叠放、总高、排深、离地高度参数），从点位或空对象建 GN 对象，调参数，统计和对比实例。资产尺寸用求值后的几何测量。已在 Blender 4.4 验证。
 - `scripts/gn_xyz_array.py`（在 Blender 内执行，依赖 gn_point_instancer 的资产组和测量函数）：建 `GN_XYZ阵列` 节点组，按 X/Y/Z 数量和间距生成阵列对象，支持父级分组，用 `set_xyz` 调参数。已在 Blender 4.4 验证。
 - `scripts/xyz_decompose.py`（纯 Python）：把点位拆成等距连续段、配对背靠背列、把托盘区块分解成最大矩形，输出 XYZ 阵列参数，可运行 `--self-test`。
+- `scripts/gn_spiral_conveyor.py`：可复用螺旋皮带几何节点，坡度与提升高度驱动，含同步护栏和进出口接驳；使用边界及参数见 conveyor-modeling.md。
 - 脚本缺失的能力不得描述成已经实现。

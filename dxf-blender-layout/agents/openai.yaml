@@ -1,0 +1,6 @@
+interface:
+  display_name: "DXF 到 Blender 布局"
+  short_description: "依据图纸和资产库摆放仓储产线设备，核对方向、位置、货架参数与遗漏"
+  default_prompt: "使用 $dxf-blender-layout 分析这份 DXF，并用我的 Blender 资产库重建设备布局。"
+policy:
+  allow_implicit_invocation: true

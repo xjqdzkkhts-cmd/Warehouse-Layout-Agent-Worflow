@@ -59,6 +59,8 @@ DXF drawing + equipment asset library
 - **Review before generation:** produce a CSV equipment list, numbered preview, and questions about uncertain items before changing the scene.
 - **Linked equipment assets:** reference collections from your `.blend` library.
 - **Editable repetition:** use XYZ arrays for regular rack rows and pallet grids, and point-based instancing for mixed conveyor equipment and irregular placements.
+- **Continuous belt conveyors:** build simple straight and curved belts with continuous guardrails; use the [spiral Geometry Nodes helper](dxf-blender-layout/scripts/gn_spiral_conveyor.py) for editable slope and lift height. See the [modeling guide](dxf-blender-layout/references/conveyor-modeling.md). The spiral helper is tested on Blender 5.2.1; check API compatibility on older versions.
+- **Rack contents:** record empty, partial, or full occupancy explicitly instead of assuming every rack is loaded.
 - **Drawing comparison:** import a layer-organized DXF underlay and switch to a top-down comparison view.
 - **Wall generation:** derive wall and column geometry from configured drawing layers, with adjustable heights.
 - **Validation:** count equipment and check supported relationships between racks, hoists, stacker cranes, rails, and guards.
