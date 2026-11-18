@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "runtimeBitmaps": 18,
+  "runtimeHDRs": 1,
+  "projectWearAtlas": "Generated per project at runtime; no previous project's wear image is included",
+  "sources": [
+    {
+      "name": "Smooth Concrete Floor",
+      "sourcePage": "https://polyhaven.com/a/smooth_concrete_floor",
+      "license": "CC0-1.0",
+      "licensePage": "https://polyhaven.com/license",
+      "files": ["concrete-color.webp", "floor-normal.webp", "floor-arm.webp"],
+      "modifications": "Desaturated color; resized OpenGL normal and AO/roughness/metalness maps; WebP conversion"
+    },
+    {
+      "name": "Metal032",
+      "sourcePage": "https://ambientcg.com/a/Metal032",
+      "license": "CC0-1.0",
+      "licensePage": "https://docs.ambientcg.com/license/",
+      "files": ["metal-color.webp", "metal-normal.webp", "metal-arm.webp"],
+      "modifications": "Packed AO/roughness/metalness in RGB; WebP conversion"
+    },
+    {
+      "name": "Empty Warehouse 01",
+      "sourcePage": "https://polyhaven.com/a/empty_warehouse_01",
+      "license": "CC0-1.0",
+      "licensePage": "https://polyhaven.com/license",
+      "files": ["warehouse.hdr"],
+      "modifications": "2K HDR, unchanged runtime source"
+    }
+  ],
+  "generated": [
+    {"kind":"paint","seed":19047,"files":["paint-color.webp","paint-normal.webp","paint-arm.webp"]},
+    {"kind":"paper","seed":19047,"files":["paper-color.webp","paper-normal.webp","paper-arm.webp"]},
+    {"kind":"rubber","seed":19047,"files":["rubber-color.webp","rubber-normal.webp","rubber-arm.webp"]},
+    {"kind":"wall","seed":19047,"files":["wall-color.webp","wall-normal.webp","wall-arm.webp"]}
+  ]
+}

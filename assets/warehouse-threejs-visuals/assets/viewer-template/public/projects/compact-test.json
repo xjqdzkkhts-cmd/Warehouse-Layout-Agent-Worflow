@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1, "id": "compact-test", "title": "小型仓库 · 合成测试",
+  "units": "meter", "upAxis": "Y", "floorY": 0,
+  "source": { "type": "fixture", "rows": 2, "bays": 4, "levels": 3, "origin": [30, 0, -15] },
+  "building": { "frameSpacing": 5, "roofRise": 1.5, "daylightOpenings": true },
+  "lighting": { "template": "soft", "spacingX": 6, "spacingZ": 7, "maxLights": 8, "maxShadowLights": 2 },
+  "surfaceSeed": 173
+}

@@ -1,0 +1,21 @@
+{
+  "name": "warehouse-threejs-preview",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "start": "node scripts/server.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "verify": "node scripts/verify.mjs"
+  },
+  "dependencies": {
+    "three": "0.180.0",
+    "lucide": "0.468.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.0",
+    "playwright": "1.62.1"
+  }
+}

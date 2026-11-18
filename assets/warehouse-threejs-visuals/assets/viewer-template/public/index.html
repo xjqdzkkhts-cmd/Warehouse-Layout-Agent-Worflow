@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>仓储场景预览</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><i data-lucide="warehouse"></i><div><h1>仓储场景预览</h1></div></div>
+    <select id="project-select" aria-label="项目"></select>
+    <div class="segmented appearance" role="group" aria-label="画面模式">
+      <button data-look="realistic" class="active" aria-pressed="true"><i data-lucide="sparkles"></i>写实</button>
+      <button data-look="original" aria-pressed="false"><i data-lucide="box"></i>原始材质</button>
+    </div>
+    <div class="tools">
+      <button class="icon-button" id="fit" aria-label="全景视角" data-tooltip="全景视角"><i data-lucide="scan"></i></button>
+      <button class="icon-button" id="download" aria-label="导出当前画面" data-tooltip="导出当前画面"><i data-lucide="download"></i></button>
+      <button class="icon-button" id="settings-toggle" aria-label="画面设置" data-tooltip="画面设置" aria-expanded="true"><i data-lucide="sliders-horizontal"></i></button>
+    </div>
+  </header>
+  <main class="workspace">
+    <section class="viewport" aria-label="仓库三维场景">
+      <canvas id="scene" aria-label="仓库模型预览"></canvas>
+      <div class="view-controls">
+        <div class="segmented small" role="group" aria-label="导航模式">
+          <button data-nav="orbit" class="active" aria-pressed="true"><i data-lucide="orbit"></i>环绕</button>
+          <button data-nav="walk" aria-pressed="false"><i data-lucide="footprints"></i>漫游</button>
+        </div>
+        <select id="view" aria-label="相机视角">
+          <option value="interior">仓库内部</option>
+          <option value="overview">总览</option>
+          <option value="exterior">建筑外观</option>
+          <option value="opposite">另一侧</option>
+          <option value="detail">近景</option>
+          <option value="workcell">机械臂工位</option>
+          <option value="conveyor">输送线</option>
+          <option value="floor">水泥地面</option>
+          <option value="top">俯视</option>
+        </select>
+      </div>
+      <div class="loading" id="loading" role="status">
+        <div class="loader-mark"><i data-lucide="warehouse"></i></div>
+        <strong id="load-title">读取场景</strong><span id="load-value">0%</span>
+        <progress id="load-progress" max="100" value="0"></progress>
+      </div>
+      <div class="scene-status" id="scene-status" hidden><span id="scene-size"></span><span id="scene-stats"></span></div>
+      <div class="error" id="error" role="alert" hidden></div>
+    </section>
+    <aside class="settings" id="settings" aria-label="画面设置">
+      <div class="panel-heading"><h2>画面设置</h2><button id="reset" class="icon-button" aria-label="重置画质" data-tooltip="重置画质"><i data-lucide="rotate-ccw"></i></button></div>
+      <div class="settings-tabs" role="tablist" aria-label="设置分类">
+        <button id="quality-tab" role="tab" aria-selected="true" aria-controls="quality-pane"><i data-lucide="sliders-horizontal"></i>画质</button>
+        <button id="scene-tab" role="tab" aria-selected="false" aria-controls="scene-pane" tabindex="-1"><i data-lucide="warehouse"></i>场景</button>
+      </div>
+      <div id="quality-pane" role="tabpanel" aria-labelledby="quality-tab">
+      <section class="preset-section">
+        <h3>画质预设</h3>
+        <div class="segmented quality" role="group" aria-label="画质预设">
+          <button data-quality="high" aria-pressed="true" class="active">高</button>
+          <button data-quality="medium" aria-pressed="false">中</button>
+          <button data-quality="low" aria-pressed="false">低</button>
+          <button data-quality="custom" aria-pressed="false">自定义</button>
+        </div>
+      </section>
+      <section class="control-section">
+        <h3>渲染与阴影</h3>
+        <label class="select-label" for="pixelRatio">渲染精度</label>
+        <select id="pixelRatio" data-quality-option><option value="0.75">低</option><option value="1">中</option><option value="1.5">高</option></select>
+        <label class="toggle"><span>静止抗锯齿</span><input id="antialias" data-quality-option type="checkbox" checked></label>
+        <label class="toggle"><span>场景阴影</span><input id="shadows" data-quality-option type="checkbox" checked></label>
+        <label class="select-label spaced" for="shadowResolution">阴影精度</label>
+        <select id="shadowResolution" data-quality-option><option value="1024">低</option><option value="2048">中</option><option value="4096">高</option></select>
+        <label class="toggle"><span>室内辅助投影</span><input id="indoorShadows" data-quality-option type="checkbox" checked></label>
+      </section>
+      <section class="control-section">
+        <h3>接触阴影 AO</h3>
+        <label class="toggle"><span>接触阴影</span><input id="ao" data-quality-option type="checkbox" checked></label>
+        <label class="select-label spaced" for="aoQuality">AO 精度</label>
+        <select id="aoQuality" data-quality-option><option value="low">低</option><option value="medium">中</option><option value="high">高</option></select>
+        <label class="toggle"><span>移动时保留 AO</span><input id="aoMoving" data-quality-option type="checkbox" checked></label>
+        <label class="range-label" for="occlusion"><span>遮蔽强度</span><output id="occlusion-value">0.65</output></label>
+        <input id="occlusion" data-quality-option type="range" min="0" max="1.2" step="0.05" value="0.65">
+        <label class="range-label" for="aoRadius"><span>影响半径（米）</span><output id="aoRadius-value">0.45</output></label>
+        <input id="aoRadius" data-quality-option type="range" min="0.1" max="1" step="0.05" value="0.45">
+      </section>
+      <section class="control-section">
+        <h3>材质细节</h3>
+        <label class="toggle"><span>PBR 贴图</span><input id="detail" data-quality-option type="checkbox" checked></label>
+        <label class="toggle"><span>程序化表面细节</span><input id="microDetail" data-quality-option type="checkbox" checked></label>
+        <label class="range-label" for="microStrength"><span>细节强度</span><output id="microStrength-value">1.00</output></label>
+        <input id="microStrength" data-quality-option type="range" min="0" max="1.5" step="0.05" value="1">
+      </section>
+      <section class="control-section">
+        <h3>反射与辉光</h3>
+        <label class="toggle"><span>地坪反射</span><input id="reflections" data-quality-option type="checkbox" checked></label>
+        <label class="select-label spaced" for="reflectionQuality">反射精度</label>
+        <select id="reflectionQuality" data-quality-option><option value="low">低</option><option value="medium">中</option><option value="high">高</option></select>
+        <label class="range-label" for="reflection"><span>反射强度</span><output id="reflection-value">0.75</output></label>
+        <input id="reflection" data-quality-option type="range" min="0" max="1" step="0.01" value="0.75">
+        <label class="toggle"><span>灯光辉光</span><input id="bloom" data-quality-option type="checkbox" checked></label>
+        <label class="range-label" for="bloomStrength"><span>辉光强度</span><output id="bloomStrength-value">0.16</output></label>
+        <input id="bloomStrength" data-quality-option type="range" min="0" max="0.5" step="0.01" value="0.16">
+      </section>
+      </div>
+      <div id="scene-pane" role="tabpanel" aria-labelledby="scene-tab" hidden>
+      <section class="control-section">
+        <h3>建筑显示</h3>
+        <label class="toggle"><span>建筑总开关</span><input id="building" type="checkbox" checked></label>
+        <label class="toggle"><span>墙体与立柱</span><input id="walls" type="checkbox" checked></label>
+        <label class="toggle"><span>屋顶与梁架</span><input id="roof" type="checkbox" checked></label>
+      </section>
+      <section class="control-section">
+        <h3>场景光照</h3>
+        <label class="select-label" for="lighting">光照方案</label>
+        <select id="lighting"><option value="daylight">自然日光</option><option value="soft">柔和顶光</option><option value="warm">暖色侧光</option></select>
+        <label class="toggle"><span>室内灯光</span><input id="lamps" type="checkbox" checked></label>
+        <label class="range-label" for="lampPower"><span>灯光亮度</span><output id="lampPower-value">1.00</output></label>
+        <input id="lampPower" type="range" min="0" max="2" step="0.05" value="1">
+        <label class="range-label" for="exposure"><span>曝光</span><output id="exposure-value">1.00</output></label>
+        <input id="exposure" type="range" min="0.5" max="1.8" step="0.01" value="1">
+        <label class="range-label" for="environment"><span>环境反射</span><output id="environment-value">0.80</output></label>
+        <input id="environment" type="range" min="0.2" max="2.4" step="0.05" value="0.8">
+      </section>
+      <section class="control-section">
+        <h3>地面外观</h3>
+        <label class="range-label" for="roughness"><span>水泥粗糙度</span><output id="roughness-value">0.72</output></label>
+        <input id="roughness" type="range" min="0.4" max="0.95" step="0.01" value="0.72">
+        <label class="range-label" for="wear"><span>磨损抛光</span><output id="wear-value">1.00</output></label>
+        <input id="wear" type="range" min="0" max="1.5" step="0.05" value="1">
+      </section>
+      <dl class="model-info"><div><dt>模型</dt><dd id="model-bytes">待加载</dd></div><div><dt>材质</dt><dd id="material-count">待加载</dd></div><div><dt>PBR 材质</dt><dd id="pbr-count">待加载</dd></div><div><dt>未分配材质</dt><dd id="unassigned-count">待加载</dd></div><div><dt>建筑依据</dt><dd id="envelope-source">待加载</dd></div><div><dt>旧地坪隐藏</dt><dd id="removed-count">待加载</dd></div><div><dt>状态</dt><dd id="model-state">加载中</dd></div></dl>
+      </div>
+    </aside>
+  </main>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

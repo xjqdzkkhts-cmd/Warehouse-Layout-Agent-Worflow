@@ -1,0 +1,4 @@
+interface:
+  display_name: "CAD 解析与网页原型"
+  short_description: "按 JDL 业务字典映射 CAD，集中核对未决项并生成可追溯的仓储网页"
+  default_prompt: "使用 $cad-web-prototype，按 JDL 业务字典和当前项目确认解析 CAD，集中核对缺失信息，验证参数与坐标后生成仓储网页。"

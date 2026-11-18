@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1, "id": "tall-test", "title": "高货架仓库 · 合成测试",
+  "units": "meter", "upAxis": "Y", "floorY": 1.2,
+  "source": { "type": "fixture", "rows": 4, "bays": 8, "levels": 6, "origin": [-45, 1.2, 20] },
+  "building": { "frameSpacing": 6.5, "roofRise": 2.2, "daylightOpenings": false },
+  "lighting": { "template": "soft", "spacingX": 8, "spacingZ": 10, "maxLights": 12, "maxShadowLights": 2 },
+  "surfaceSeed": 173
+}

@@ -1,0 +1,1 @@
+{"name":"campus-warehouse-web","private":true,"type":"module","scripts":{"dev":"python3 -m http.server 5184 --bind 127.0.0.1 --directory dist","test":"node tools/test-high-conveyors.mjs && node tools/validate.mjs && node tools/test-navigation.mjs"}}

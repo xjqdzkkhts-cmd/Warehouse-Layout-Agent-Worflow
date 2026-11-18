@@ -1,0 +1,27 @@
+{
+  "templateId": "three-buildings-sidebar-v1",
+  "sourceProject": "warehouse-web",
+  "sourceCommit": "74c64e5bb3d7950372dbf63c967e9cc05cb4937c",
+  "sourceFiles": {
+    "index.html": "5745c24d8606c225bff35809ee14814931534dbf60143149ccceb37596723fb8",
+    "style.css": "b0060cec77d48d43fae0a5c795c68a08e1466c36fb75558ae7234a7e0976e056",
+    "app.js": "6c64244c626d3a073b1ff4600e22d729b7341df005d52c198af1663ff38da365"
+  },
+  "sourceBasis": "First three-building warehouse website, after header/timeline removal and monochrome lighting controls",
+  "included": [
+    "index.html",
+    "style.css",
+    "ui.js",
+    "app.js"
+  ],
+  "excluded": [
+    "scene.json",
+    "scene.bin.gz",
+    "robot-arm.glb",
+    "production.js",
+    "logistics.js",
+    "flow.js",
+    ".openai/hosting.json"
+  ],
+  "adaptation": "Original HTML shell and byte-identical CSS. Warehouse/device/floor data are supplied by scene adapter. UI events extracted into reusable controller; no original scene or model loading code."
+}

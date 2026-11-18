@@ -1,0 +1,32 @@
+{
+  "version": "1.8.1",
+  "validated_on": "2026-11-17",
+  "mapping_behavior_tests": {
+    "passed": 12,
+    "command": "python3 -m unittest discover -s scripts/tests -v"
+  },
+  "review_generation_tests": {
+    "passed": 2,
+    "coverage": "confirmed but blocked; bulk confirmation scope separation"
+  },
+  "relative_reference_links": {
+    "checked": 55,
+    "status": "passed"
+  },
+  "yaml_metadata": "passed with Ruby Psych YAML parser and naming/description checks",
+  "official_quick_validate": "passed with Python containing PyYAML",
+  "python_json_javascript_syntax": "passed",
+  "source_sql_and_bundled_sql": "identical",
+  "bundle_validation": "passed; 53 high-detail sources and 26 derived/case assets; low library removed",
+  "runtime_scope": "read-only mapping lookup and review generation; no production backend or automatic DXF-to-mapping integration claimed",
+  "not_verified": [
+    "real project DXF end-to-end generation",
+    "browser interaction and visual review",
+    "production PostgreSQL execution"
+  ],
+  "latest_change": "Default building explosion: vertical layers, animated expand/collapse, interruption and exact restore; documentation only",
+  "latest_change_validation": {
+    "scope": "documentation only; runtime animation not implemented in this update",
+    "references": "checked"
+  }
+}

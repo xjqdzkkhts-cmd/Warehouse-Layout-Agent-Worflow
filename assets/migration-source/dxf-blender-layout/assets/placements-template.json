@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "source_dxf_fingerprint": null,
+  "revision": null,
+  "cad_unit": null,
+  "unit_scale_to_m": null,
+  "anchor_cad": null,
+  "matrix_convention": "row-major 4x4; column vectors; source local geometry to CAD world",
+  "instances": [],
+  "instance_fields": {
+    "instance_id": "stable unique ID",
+    "equipment_id": "CSV category ID",
+    "source_handle": "DXF entity handle",
+    "block_path": "ordered parent and child instance identifiers",
+    "region_id": "region identifier",
+    "world_matrix_cad": "4x4 matrix or null if unresolved",
+    "world_footprint_cad": "actual body polygon in CAD world units or null",
+    "orientation_deg": "actual functional direction or null",
+    "mirrored": "boolean or null",
+    "position_status": "resolved or pending",
+    "evidence": "calculation source and unresolved reasons"
+  }
+}

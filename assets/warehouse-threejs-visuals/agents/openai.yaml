@@ -1,0 +1,4 @@
+interface:
+  display_name: "仓储 Three.js 写实预览"
+  short_description: "复用仓储材质、光影和画质预设，接入新场景并检查视觉效果与性能边界"
+  default_prompt: "使用 $warehouse-threejs-visuals，将我的仓储模型接入同一套写实预览模板，保留几何与布局，并完成跨场景视觉检查。"
